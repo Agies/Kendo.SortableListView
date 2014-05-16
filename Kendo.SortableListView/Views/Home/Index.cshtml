@@ -10,6 +10,50 @@
     <div id="pageList"></div>
 </div>
 
+<script id="page-template" type="text/x-kendo-template">
+    #if(CanMove) {#
+    <div class="k-widget page-view">
+        #} else {#
+        <div class="k-widget page-view disabled">
+            #}#
+            <label>#:Name#</label> (#:Enabled#)
+            #if(CanMove) {#
+            <div class="edit-buttons">
+                <a class="k-button k-button-icontext k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+                <a class="k-button k-button-icontext k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+                <a class="k-button">Show Before #:BeforeAction#</a>
+            </div>
+            #}#
+        </div>
+</script>
+
+<script id="edit-page-template" type="text/x-kendo-template">
+    <div class="k-widget page-view edit-view">
+        <dl>
+            <dt>Page Name</dt>
+            <dd>
+                <input type="text" name="Name" class="k-textbox" data-bind="value:Name" required="required" validationmessage="required" />
+                <span data-for="Name" class="k-invalid-msg"></span>
+            </dd>
+            <dt>Content</dt>
+            <dd>
+                <div class="page-content-editor">
+                    <textarea name="Content" data-role="editor" class="k-textbox" data-bind="value:Content" required="required" validationmessage="required" />
+                </div>
+                <span data-for="Content" class="k-invalid-msg"></span>
+            </dd>
+            <dt>Enabled</dt>
+            <dd>
+                <input type="checkbox" name="Enabled" data-bind="checked:Enabled" />
+            </dd>
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>
+
 <script>
     $(document).ready(function () {
         var dataSource = new kendo.data.DataSource({
@@ -117,46 +161,3 @@
     });
 </script>
 
-<script id="page-template" type="text/x-kendo-template">
-    #if(CanMove) {#
-    <div class="k-widget page-view">
-        #} else {#
-        <div class="k-widget page-view disabled">
-            #}#
-            <label>#:Name#</label> (#:Enabled#)
-            #if(CanMove) {#
-            <div class="edit-buttons">
-                <a class="k-button k-button-icontext k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-                <a class="k-button k-button-icontext k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-                <a class="k-button">Show Before #:BeforeAction#</a>
-            </div>
-            #}#
-        </div>
-</script>
-
-<script id="edit-page-template" type="text/x-kendo-template">
-    <div class="k-widget page-view edit-view">
-        <dl>
-            <dt>Page Name</dt>
-            <dd>
-                <input type="text" name="Name" class="k-textbox" data-bind="value:Name" required="required" validationmessage="required" />
-                <span data-for="Name" class="k-invalid-msg"></span>
-            </dd>
-            <dt>Content</dt>
-            <dd>
-                <div class="page-content-editor">
-                    <textarea name="Content" data-role="editor" class="k-textbox" data-bind="value:Content" required="required" validationmessage="required" />
-                </div>
-                <span data-for="Content" class="k-invalid-msg"></span>
-            </dd>
-            <dt>Enabled</dt>
-            <dd>
-                <input type="checkbox" name="Enabled" data-bind="checked:Enabled" />
-            </dd>
-        </dl>
-        <div class="edit-buttons">
-            <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-            <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-        </div>
-    </div>
-</script>
