@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div>
+    <h1>Page Editor</h1>
+    <div id="pageAdd">
+        <a class="k-button k-button-icontext k-add-button" href="#"><span class="k-icon k-add"></span>Add Content Page</a>
+    </div>
+    <div id="pageList"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var dataSource = new kendo.data.DataSource({
+            data: {
+                Data: [
+                    {
+                        InterstitialId: null,
+                        Name: "Application",
+                        Content: null,
+                        CanMove: false,
+                        BeforeAction: "",
+                        Enabled: true,
+                    },
+                    {
+                        InterstitialId: null,
+                        Name: "Income",
+                        Content: null,
+                        CanMove: false,
+                        BeforeAction: "",
+                        Enabled: true,
+                    },
+                    {
+                        InterstitialId: null,
+                        Name: "Household",
+                        Content: null,
+                        CanMove: false,
+                        BeforeAction: "",
+                        Enabled: true,
+                    },
+                    {
+                        InterstitialId: null,
+                        Name: "Secure Debts",
+                        Content: null,
+                        CanMove: false,
+                        BeforeAction: "",
+                        Enabled: true,
+                    },
+                    {
+                        InterstitialId: null,
+                        Name: "Unsecure Debts",
+                        Content: null,
+                        CanMove: false,
+                        BeforeAction: "",
+                        Enabled: true,
+                    }
+                ],
+            },
+            schema: {
+                data: "Data",
+                total: "Total",
+                errors: "Errors",
+                model: {
+                    id: "InterstitialId",
+                    fields: {
+                        InterstitialId: { editable: false, defaultValue: 0 },
+                        Name: { Validation: { required: true } },
+                        Content: { Validation: { required: true } },
+                        CanMove: { editable: false, type: "boolean", defaultValue: true },
+                        BeforeAction: { editable: true, defaultValue: "Application" },
+                        Enabled: { type: "boolean", defaultValue: true, Validation: { required: true } }
+                    }
+                }
+            }
+        });
+
+        var listView = $("#pageList").kendoListView({
+            dataSource: dataSource,
+            template: kendo.template($("#page-template").html()),
+            editTemplate: kendo.template($("#edit-page-template").html()),
+        }).data("kendoListView");
+        var sortable = $("#pageList").kendoSortable({
+            cursor: "move",
+            placeholder: placeholder,
+            hint: hint,
+            disabled: ".disabled",
+            ignore: ".k-textbox",
+            change: onChange,
+            end: onEnd,
+        });
+        $(".k-add-button").click(function (e) {
+            listView.add();
+            e.preventDefault();
+        });
+        function placeholder(element) {
+            return element.clone().css("opacity", 0.1);
+        };
+        function hint(element) {
+            return element.clone().addClass("hint");
+        };
+        function onEnd(e) {
+            if (e.newIndex === dataSource.data().length - 1) {
+                e.preventDefault();
+                return;
+            }
+        }
+        function onChange(e) {
+            var newIndex = e.newIndex,
+                dataItem = dataSource.getByUid(e.item.data("uid"));
+            dataSource.remove(dataItem);
+            dataSource.insert(newIndex, dataItem);
+            var next = dataSource.at(newIndex + 1);
+            dataItem.set("BeforeAction", next.Name);
+            dataSource.sync();
+        };
+    });
+</script>
+
+<script id="page-template" type="text/x-kendo-template">
+    #if(CanMove) {#
+    <div class="k-widget page-view">
+        #} else {#
+        <div class="k-widget page-view disabled">
+            #}#
+            <label>#:Name#</label> (#:Enabled#)
+            #if(CanMove) {#
+            <div class="edit-buttons">
+                <a class="k-button k-button-icontext k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+                <a class="k-button k-button-icontext k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+                <a class="k-button">Show Before #:BeforeAction#</a>
+            </div>
+            #}#
+        </div>
+</script>
+
+<script id="edit-page-template" type="text/x-kendo-template">
+    <div class="k-widget page-view edit-view">
+        <dl>
+            <dt>Page Name</dt>
+            <dd>
+                <input type="text" name="Name" class="k-textbox" data-bind="value:Name" required="required" validationmessage="required" />
+                <span data-for="Name" class="k-invalid-msg"></span>
+            </dd>
+            <dt>Content</dt>
+            <dd>
+                <div class="page-content-editor">
+                    <textarea name="Content" data-role="editor" class="k-textbox" data-bind="value:Content" required="required" validationmessage="required" />
+                </div>
+                <span data-for="Content" class="k-invalid-msg"></span>
+            </dd>
+            <dt>Enabled</dt>
+            <dd>
+                <input type="checkbox" name="Enabled" data-bind="checked:Enabled" />
+            </dd>
+        </dl>
+        <div class="edit-buttons">
+            <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+            <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+        </div>
+    </div>
+</script>

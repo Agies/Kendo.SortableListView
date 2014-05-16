@@ -1,0 +1,133 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+div.manage {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+}
+
+#pageAdd {
+    margin: 10px 0px;
+    padding: 10px;
+    background: rgb(245, 245, 245);
+    border: rgb(220, 220, 220) 1px solid;
+}
+
+#pageList {
+    min-height: 400px;
+    background: rgb(245, 245, 245);
+    padding: 10px;
+}
+
+.page-view {
+    padding: 10px;
+}
+
+    .page-view label {
+        display: inline-block;
+        font-weight: bold;
+        width: 160px;
+    }
+
+    .page-view .edit-buttons {
+        margin-left: 50px;
+        display: inline-block;
+    }
+
+.k-widget.disabled {
+    background-color: rgba(0, 150, 214, .1);
+}
+
+.edit-view {
+    background: white;
+}
+
+    .edit-view dl {
+        width: 80%;
+        display: inline-block;
+    }
+
+    .edit-view dt, dd {
+        padding: 10px;
+        float: left;
+    }
+
+    .edit-view .edit-buttons {
+        position: absolute;
+        right: 11px;
+        height: 437px;
+        margin-top: -10px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        width: 60px;
+        background: rgb(245,245,245);
+    }
+
+        .edit-view .edit-buttons .k-button {
+            margin: 5px;
+            width: 80%;
+            height: 40px;
+        }
+
+    .edit-view dd .page-content-editor {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .edit-view dd .k-invalid-msg {
+        position: absolute;
+    }
+
+    .edit-view dd {
+        clear: right;
+    }
+
+    .edit-view dt {
+        clear: left;
+    }
+
+    .edit-view dd input[type=text] {
+        width: 400px;
+    }
